@@ -1,0 +1,13 @@
+{
+	"name": "Evernote Bot",
+	// Dockerfileでイメージ・コンテナを作成
+	"dockerFile": "Dockerfile",
+	// リモート先のVS Codeにインストールする拡張機能
+	"extensions": [
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"ms-toolsai.jupyter",
+		"ms-toolsai.jupyter-keymap",
+		"ms-toolsai.jupyter-renderers",
+	],
+}
