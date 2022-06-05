@@ -2,11 +2,13 @@
 from evernote_bot import evernote_api, twitter_api, tag_control
 
 def main():
+    #ノートブックを指定
     selected_notebook_name="最初のノートブック"
  
-    #print(twitter_api.getLatestTweet()[0].text)
+    #ランダムにノートを取得する
     selected_note=evernote_api.getNoteContents(selected_notebook_name)
     
+    #tweetする function tweet(title, text, comment, tag)
     tweet_title=selected_note["title"] 
     
     print(selected_note["text"])
