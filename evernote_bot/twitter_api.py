@@ -2,6 +2,8 @@
 import tweepy
 import datetime
 import random
+import unicodedata as uni
+import re
 
 CONSUMER_KEY = "BhkGKCWAUUa6lYyaR1pFWPCj2"
 CONSUMER_SECRET = "UCSv5Hny6Q0q5kRgqSy93x1SoFqwy4QiFnMxHoQGqumkIZsht4"
@@ -19,6 +21,42 @@ def makeApi():
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
     return tweepy.API(auth)
+
+def len_fullwidth(text):
+    return -(-sum([(1, 2)[uni.east_asian_width(t) in 'FWA'] for t in text])//2)
+
+def makeInitTweet(title, text, tag):
+  _init_tweet = title + tag
+  init_tweet = ''
+
+  if len_fullwidth(_init_tweet + text)<=140:
+    print('OK, Tweet!')
+    print(title + text + tag)
+
+  else:
+    _text_list = []
+    _text_list = text.split('。')
+
+    for idx in range(len(_text_list)):
+      if re.match(r'^[\n]+$', _text_list[idx]) == None:
+        _text_list[idx] += '。'
+
+    if len_fullwidth(_init_tweet + _text_list[0]) > 140:
+      print('Only, Title')
+      print(title)
+    
+    else:
+      init_tweet = title + _text_list[0]
+      for idx in range(1, len(_text_list)):
+        if len_fullwidth( init_tweet + _text_list[idx] + tag) > 140:
+            init_tweet += tag
+            print(len(init_tweet))
+            print(init_tweet)
+
+            return _text_list[idx: len(_text_list)]
+        
+        else:
+          init_tweet += _text_list[idx]
 
 def testTweet():
   i=1
