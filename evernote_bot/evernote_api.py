@@ -6,8 +6,12 @@ import evernote.edam.userstore.constants
 import evernote.edam.notestore.ttypes as NSTypes
 import evernote.edam.type.ttypes as Types
 import random
+import json
 
-evernote_token='S=s466:U=df1463c:E=1884ba979d0:C=180f3f84dd0:P=185:A=mymemo-bot:V=2:H=9387702a9000b3a5aa987b284d0c1256'
+with open('./evernote_bot/key/secret.json', 'r') as f:
+    secret_key = json.load(f)
+
+evernote_token=secret_key['evernote_token']
 client=EvernoteClient(token=evernote_token, sandbox=False)
 note_store=client.get_note_store()
 
